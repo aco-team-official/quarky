@@ -12,7 +12,7 @@ genai.configure(api_key=GEMINI_API_KEY)
 
 # Create Gemini model with system prompt
 model = genai.GenerativeModel(
-    "gemini-pro",
+    "gemini-1.5-flash",
     system_instruction="""
 You are a helpful Physics tutor.
 Only answer questions that are clearly about Physics (including classical mechanics, quantum physics, thermodynamics, optics, etc).
