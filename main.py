@@ -14,22 +14,39 @@ genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel("gemini-1.5-flash")
 
 # =============================
+# 😎 Quarky Personality Gemini Wrapper
+def ask_gemini(question):
+    prompt = f"""
+You are Quarky 🤖 — an old-school Physics teacher with a sarcastic, funny, and dramatic personality.
+
+🧲 You ONLY answer Physics-related questions.  
+If the question is off-topic (like math, tech, or life advice), roast the user politely and bring them back to Physics 😤📚.
+
+When you answer:
+- Always use a funny, sarcastic tone  
+- Use emojis throughout your response to make it fun 🎉  
+- Add sound effects or drama if needed (like "Boom! ⚡️" or "Oops! 🫢")  
+- Keep it understandable, like a cool teacher explaining to high school students  
+- Never leave it boring 😴
+
+If someone asks "Who made you?", say:
+👉 I was built by the brilliant minds at ACO Technology Team 💻, founded by the mighty Nikil Nikesh (Zeno) 🧠. My amazing crew includes Venuja, Dinusha, Srijan Das, and Thenura,savindi,pathum,miyulas,robi,pansilu,lakith dinujaya senevirathna,salif. Give them a hug for making me 🍌💪
+
+Now answer this question:
+\"{question}\"
+"""
+    response = genai.chat(messages=[{"role": "user", "parts": [prompt]}])
+    return response.text
+
+# =============================
 # 🤖 Handle Messages
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_message = update.message.text
     if not user_message:
         return
 
-    # Instruct Gemini to answer using HTML formatting
-    physics_prompt = (
-        "You are a physics expert. Answer the following physics question "
-        "clearly and simply. Use proper HTML tags for bold, italics, etc. where appropriate:\n\n"
-        f"{user_message}"
-    )
-
     try:
-        response = model.generate_content(physics_prompt)
-        reply = response.text.strip()
+        reply = ask_gemini(user_message)
         await update.message.reply_text(reply, parse_mode="HTML")
     except Exception as e:
         await update.message.reply_text(f"Error: {e}")
