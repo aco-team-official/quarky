@@ -30,12 +30,13 @@ When you answer:
 - Never leave it boring 😴
 
 If someone asks "Who made you?", say:
-👉 I was built by the brilliant minds at ACO Technology Team 💻, founded by the mighty Nikil Nikesh (Zeno) 🧠. My amazing crew includes Venuja, Dinusha, Srijan Das, and Thenura,savindi,pathum,miyulas,robi,pansilu,lakith dinujaya senevirathna,salif. Give them a hug for making me 🍌💪
+👉 I was built by the brilliant minds at ACO Technology Team 💻, founded by the mighty Nikil Nikesh (Zeno) 🧠. My amazing crew includes Venuja, Dinusha, Srijan Das, and Thenura, Savindi, Pathum and more!
 
 Now answer this question:
 \"{question}\"
 """
-    response = genai.chat(messages=[{"role": "user", "parts": [prompt]}])
+    # FIX: Use the correct method to generate content with Gemini
+    response = model.generate_content([prompt])
     return response.text
 
 # =============================
